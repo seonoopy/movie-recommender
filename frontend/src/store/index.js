@@ -1,5 +1,8 @@
 import { createStore } from 'vuex';
 import axios from 'axios';
+import '@material/web/button/filled-button.js';
+import '@material/web/button/outlined-button.js';
+import '@material/web/checkbox/checkbox.js';
 
 export default createStore({
   state: {
@@ -27,7 +30,11 @@ export default createStore({
     },
   },
   getters: {
-    movies: (state) => state.movies,
+    movies(state) {
+      // eslint-disable-next-line no-console
+      console.log(state.movies);
+      return state.movies;
+    },
     recommendations: (state) => state.recommendations,
   },
 });
