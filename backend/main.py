@@ -4,6 +4,11 @@ from fastapi import FastAPI, HTTPException
 import requests
 import os
 from fastapi.middleware.cors import CORSMiddleware
+from dotenv import load_dotenv
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+load_dotenv(os.path.join(BASE_DIR, ".env"))
+
 
 app = FastAPI()
 
@@ -22,7 +27,7 @@ app.add_middleware(
 )
 
 # TMDb API 키를 환경 변수에서 가져옴
-TMDB_API_KEY = os.getenv('TMDB_API_KEY', '625a3368bc3077f6923a608db044030c')
+TMDB_API_KEY = os.environ['TMDB_API_KEY']
 
 # 캐싱된 데이터 조회 함수
 def get_cached_data(key):
@@ -44,7 +49,8 @@ def search_movies(query: str, language: str = "ko"):
     cached_data = get_cached_data(cache_key)
     if cached_data:
         return cached_data
-    
+    print('@' * 80)
+    print(f'TMDB_API_KEY:{TMDB_API_KEY}')
     url = f"https://api.themoviedb.org/3/search/movie"
     params = {"api_key": TMDB_API_KEY, "query": query, "language": language}
     
